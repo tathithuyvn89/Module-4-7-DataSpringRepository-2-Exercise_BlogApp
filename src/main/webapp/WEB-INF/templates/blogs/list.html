@@ -7,36 +7,59 @@
 <body>
     <a href="/create-blog">Create new Blog</a>
 <h1>Customers</h1>
-    <form>
-        Search by name:
-        <input name="s" type="text"/>
-        <input type="submit" value="Search"/>
-    </form><br/>
-    <table>
-        <tr>
-            <td>Author</td>
-            <td>Title</td>
-            <td>context</td>
-            <td>PostDate</td>
-            <td>Category</td>
-            <td>Action</td>
-        </tr>
-
-        <th:block th:each="blog: ${blogs}">
+    <div>
+        <form>
+            Search by name:
+            <input name="s" type="text"/>
+            <input type="submit" value="Search"/>
+        </form><br/>
+    </div>
+    <div>
+        <a th:href="@{bloglist/sortByDay}">Sap xep theo ngay</a>
+    </div>
+    <div>
+        <ul>
+            <th:block th:each="category: ${categories}">
+                <li>
+                    <a th:href="@{/bloglist/__${category.getName()}__}">
+                        <span th:text="${category.name}"></span>
+                    </a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+    <div>
+        <table>
             <tr>
-                <td th:text="${blog.getAuthor()}"></td>
-                <td th:text="${blog.getName()}"></td>
-                <td th:text="${blog.getContent()}"></td>
-                <td th:text="${blog.getDate()}"></td>
-                <td th:text="${blog.getCategory().name}"></td>
-                <td>
-                    <a th:href="@{/bloglist/__${blog.getId()}__/delete}">Delete</a>
-                    <a th:href="@{/bloglist/__${blog.getId()}__/edit}">Edit</a>
-                    <a th:href="@{/bloglist/{id}/view(id=${blog.getId()})}">View</a>
-                </td>
+                <td>Author</td>
+                <td>Title</td>
+                <td>context</td>
+                <td>PostDate</td>
+                <td>Category</td>
+                <td>Action</td>
+                <td>Vote</td>
             </tr>
-        </th:block>
-    </table>
+
+            <th:block th:each="blog: ${blogs}">
+                <tr>
+                    <td th:text="${blog.getAuthor()}"></td>
+                    <td th:text="${blog.getName()}"></td>
+                    <td th:text="${blog.getContent()}"></td>
+                    <td th:text="${blog.getDate()}"></td>
+                    <td th:text="${blog.getCategory().name}"></td>
+                    <td th:text="${blog.getLikes()}"></td>
+                    <td>
+                        <a th:href="@{/bloglist/__${blog.getId()}__/delete}">Delete</a>
+                        <a th:href="@{/bloglist/__${blog.getId()}__/edit}">Edit</a>
+                        <a th:href="@{/bloglist/{id}/view(id=${blog.getId()})}">View</a>
+                        <a th:href="@{/bloglist/__${blog.getId()}__/like}"><input type="button" value="Like"></a>
+
+
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
 
 
     <div>

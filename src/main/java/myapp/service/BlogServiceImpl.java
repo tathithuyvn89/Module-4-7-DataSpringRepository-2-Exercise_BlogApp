@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public class BlogServiceImpl implements BlogService {
     @Autowired
@@ -18,7 +17,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog findBlog(long id) {
+    public Blog findBlog(Long id) {
        Blog blog= blogRepository.findOne(id);
        return blog;
     }
@@ -40,7 +39,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void deleteBlog(long id) {
+    public void deleteBlog(Long id) {
         blogRepository.delete(id);
 
     }
@@ -49,4 +48,19 @@ public class BlogServiceImpl implements BlogService {
     public Page<Blog> findAllByNameContaining(String name, Pageable pageable) {
         return blogRepository.findAllByNameContaining(name,pageable);
     }
+
+    @Override
+    public Page<Blog> findBlogsByOrderByDate(Pageable pageable) {
+        return blogRepository.findBlogsByOrderByDate(pageable);
+    }
+
+    @Override
+    public Page<Blog> findBlogsByCategory_NameOrderByDate(String categoryName,Pageable pageable) {
+        return blogRepository.findBlogsByCategory_NameOrderByDate(categoryName,pageable);
+    }
+
+//    @Override
+//    public Page<Blog> findAllBlogSortByName( Pageable pageable,Sort sort) {
+//       return blogRepository.findAllByName(pageable,sort);
+//    }
 }
